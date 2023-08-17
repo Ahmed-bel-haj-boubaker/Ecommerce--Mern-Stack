@@ -11,9 +11,10 @@ justify-content: center;
   margin:1rem;
 }
 .product img{
-  width: 400px;
-  max-width: 500px;
+  width: 200px;
+  max-width: 300px;
 }
 .product-info{
   padding: 1rem;
 }
+

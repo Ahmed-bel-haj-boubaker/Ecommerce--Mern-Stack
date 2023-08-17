@@ -11,13 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-header{
-  background-color: #282c34;
-  padding: 1rem;
-  
+/* Footer */
+.site-container{
+  min-height: 100vh;
 }
-header a{
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
+main{
+  flex: 1;
+}
+.rating span{
+  color: gold;
+}
+.btn-primary{
+  background-color: yellow;
+  color: black;
+}
+.btn-primary:hover{
+  background-color: yellow;
+  color: black;
+}
+.img-large{
+  max-width: 100%;
+}
+.buttonAdd:hover{
+  background-color: yellow;
+  color: black;
 }

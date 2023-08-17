@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useReducer } from "react";
-//import data from "../data";
-import { Link } from "react-router-dom";
+
 import axios from "axios";
-
-
-
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Product from "../Components/Product";
 
 
 const reducer = (state, action) => {
@@ -49,41 +48,27 @@ function HomeScreen() {
       <h1>List products</h1>
 
       <div className="products">
-        {
-        
-        loading ? (
+        {loading ? (
           <div>Loading</div>
         ) : error ? (
           <div> {error}</div>
-        ): (
-         products.map(
+        ) : (
+          <Row>
+
+
+     
+       {   products.map(
             (
               product //change the <a/> to Link and the href to 'to' beacause we dont want to reload the page we want SPA page
             ) => (
-              <div className="product" key={product.slug}>
-                <Link to={`/product/${product.slug}`}>
-                  <img src={product.image} alt={product.name} />
-                </Link>
-                <div className="product-info">
-                  <Link to={`/product/${product.slug}`}>
-                    <p>{product.name}</p>
-                  </Link>
-                  <p>
-                    <strong>${product.price}</strong>
-                  </p>
-                  <button>Add to cart</button>
-                </div>
-              </div>
+              <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+              <Product product={product}></Product>
+             
+              </Col>
             )
-          )
-
-        )
-
-
-
-
-        }
-       
+          )}
+          </Row>
+        )}
       </div>
     </div>
   );
