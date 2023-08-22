@@ -8,7 +8,7 @@ import Rating from "../Components/Rating";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/esm/Button";
-import '../index.css'
+import "../index.css";
 import { Helmet } from "react-helmet-async";
 import LoadingBox from "../Components/LoadingBox";
 import Alert from "../Components/Alert";
@@ -28,7 +28,7 @@ const reducer = (state, action) => {
   }
 };
 function ProductScreen() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const params = useParams(); //to extact the parameter from the route in the home Screen component
   const { slug } = params; // slug est le parameter
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
@@ -43,39 +43,39 @@ function ProductScreen() {
         const result = await axios.get(`/api/products/slug/${slug}`);
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
       } catch (error) {
-        dispatch({ type: "FETCH_FAIL", payload:getError(error) });
+        dispatch({ type: "FETCH_FAIL", payload: getError(error) });
       }
     };
     fetchData();
   }, [slug]);
-  const {state,dispatch:ctxDispatch} = useContext(Store);
-  const {cart}=state;
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { cart } = state;
 
-  const addToCartHandler = async ()=>{
-     const existItem = cart.cartItems.find((x)=>x._id = product._id);
-     const quantity = existItem ? existItem.quantity +1 : 1;
+  const addToCartHandler = async () => {
+    const existItem = cart.cartItems.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
 
-     const { data } = await axios.get(`/api/products/${product._id}`);
+    const { data } = await axios.get(`/api/products/${product._id}`);
    
-     if(data.countInStock < quantity){
-     window.alert('sorry product is out of stock');
-     return;
-    }
-
+   
+   const stock=  product.countInStock -- ;
+   if(product.countInStock < product.quantity){
+    alert('product is out of stock')
+   }
+   console.log(stock)
     ctxDispatch({
-    type:'CART_ADD_ITEM',
-    payload:{...product,quantity},
-  })
-  navigate('/cart');
-  console.log(product._id)
-  console.log(quantity)
-}
+      type: "CART_ADD_ITEM",
+      payload: { ...product, quantity },
+    });
+
+    navigate("/cart");
+  };
   return (
     <div>
       {loading ? (
-       <LoadingBox/>
+        <LoadingBox />
       ) : error ? (
-        <Alert variant="danger" >{error}</Alert>
+        <Alert variant="danger">{error}</Alert>
       ) : (
         <div>
           <Row>
@@ -90,9 +90,8 @@ function ProductScreen() {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <Helmet>
-                  <title>{product.name}</title>
+                    <title>{product.name}</title>
                   </Helmet>
-                  
                 </ListGroup.Item>
 
                 <ListGroup.Item>
@@ -121,10 +120,11 @@ function ProductScreen() {
                     <Row>
                       <Col>Status:</Col>
                       <Col>
-                        {product.countInStock > 0 ? (
-                          <Badge bg="success">In Stock</Badge>
-                        ) : (
+                        {product.countInStock === 0 ? (
+                       
                           <Badge bg="danger">Unavailable</Badge>
+                        ) : (
+                          <Badge bg="success">In Stock</Badge>
                         )}
                       </Col>
                     </Row>
